@@ -1,0 +1,79 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link
+      rel="stylesheet"
+      href="https://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css"
+    />
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="https://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
+
+    <script type="application/javascript">
+      $(document).ready(function () {
+        //  here I asign the event dynamically, not needed for 'body' as such tag should always be present,
+        //  but something you should look into
+        //  see also: http://api.jquery.com/on/
+        var color = "purple";
+        var lastclick = null;
+
+        $(document).on("click", "#floorballdiv", function (e) {
+          mouseX = e.pageX;
+          mouseY = e.pageY;
+          //  simply press F12 to look at your browsers console and see the results
+          console.log("Mouse Position:\t" + mouseX + "|" + mouseY);
+          //  no need in JS to write var for every variable declartion,
+          //  just seperate with a comma
+
+          var size = "8px"; //  changed size to 5px from 1 just to make it easier to see what's going on for you
+          //  No need to use $("body") since this event takes place on the body tag
+          //  $(this), in an event, always equals the selector the event is tied to
+          lastclick =
+            //  making an element with jquery is simple
+            //  no need to insert whole tag, all you need is tag name and a closer
+            //  like so
+            $("<div />")
+              //  easily tie all css together
+              .css({
+                //  also, in jquery CSS, any css variable with a '-'
+                //  can be renamed when assigning
+                //  simply remove the '-' and capitilize the first letter of the second word
+                //  like so, here in 'background-color'
+                backgroundColor: color,
+                height: size,
+                left: mouseX + "px",
+                position: "absolute",
+                top: mouseY + "px",
+                width: size,
+              });
+          $(this).append(lastclick);
+        });
+
+        $("#removeDot").click(function () {
+          if (lastclick != null) {
+            lastclick.remove();
+            lastclick = null;
+          }
+        });
+
+        $("#colorGoal").click(function () {
+          if (lastclick != null) {
+            $(lastclick).css("background-color", "#005599");
+          }
+        });
+      });
+    </script>
+
+    <css type="text/css"></css>
+  </head>
+  <body>
+    <div id="floorballdiv" style="height: auto; width: auto">
+      <img src="floorball.png" style="width: 90%" />
+    </div>
+
+    <div>
+      <button id="removeDot">Radera sista klick</button>
+      <button id="colorGoal">Målfärg</button>
+    </div>
+  </body>
+</html>
