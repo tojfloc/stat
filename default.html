@@ -14,7 +14,7 @@
         //  here I asign the event dynamically, not needed for 'body' as such tag should always be present,
         //  but something you should look into
         //  see also: http://api.jquery.com/on/
-        var color = "purple";
+        var color = "#581845";
         var lastclick = null;
 
         $(document).on("click", "#floorballdiv", function (e) {
@@ -58,7 +58,7 @@
 
         $("#colorGoal").click(function () {
           if (lastclick != null) {
-            $(lastclick).css("background-color", "#005599");
+            $(lastclick).css("background-color", "#C70039");
           }
         });
       });
@@ -67,13 +67,15 @@
     <css type="text/css"></css>
   </head>
   <body>
-    <div id="floorballdiv" style="height: auto; width: auto">
-      <img src="floorball.png" style="width: 90%" />
-    </div>
+    <center>
+      <div id="floorballdiv" style="height: auto; width: auto">
+        <img src="floorball.png" style="width: 90%" />
+      </div>
 
-    <div>
-      <button id="removeDot">Radera sista klick</button>
-      <button id="colorGoal">Målfärg</button>
-    </div>
+      <div>
+        <button id="removeDot">Radera sista klick</button>
+        <button id="colorGoal">Målfärg</button>
+      </div>
+    </center>
   </body>
 </html>
