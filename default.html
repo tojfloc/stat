@@ -23,7 +23,7 @@
 
           console.log("Mouse Position:\t" + mouseX + "|" + mouseY);
 
-          var size = "15px";
+          var size = "17px";
           lastclick = $("<div />").css({
             backgroundColor: color,
             height: size,
@@ -32,6 +32,7 @@
             top: mouseY + "px",
             width: size,
           });
+
           $(this).append(lastclick);
 
           lastBtnClickId = "btnShotOnTarget";
@@ -101,10 +102,10 @@
       <div>
         <button
           data-name="Mål: "
-          data-thecolor="lime"
+          data-thecolor="black"
           onClick="updateBtn(this.id)"
           id="btnGoal"
-          style="background-color: lime"
+          style="background-color: black"
         >
           Mål
         </button>
