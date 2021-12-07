@@ -15,7 +15,7 @@
       var lastclick = null;
 
       $(document).ready(function () {
-        var color = "Firebrick";
+        var color = "green";
 
         $(document).on("click", "#floorballdiv", function (e) {
           mouseX = e.pageX;
@@ -101,46 +101,46 @@
       <div>
         <button
           data-name="Mål: "
-          data-thecolor="red"
+          data-thecolor="lime"
           onClick="updateBtn(this.id)"
           id="btnGoal"
-          style="background-color: red"
+          style="background-color: lime"
         >
           Mål
         </button>
         <button
           data-name="Skott på mål: "
-          data-thecolor="Firebrick"
+          data-thecolor="green"
           onClick="updateBtn(this.id)"
           id="btnShotOnTarget"
-          style="background-color: Firebrick"
+          style="background-color: green"
         >
           Skott på mål
         </button>
         <button
           data-name="Skott utanför: "
-          data-thecolor="Teal"
+          data-thecolor="purple"
           onClick="updateBtn(this.id)"
           id="btnMissed"
-          style="background-color: Teal"
+          style="background-color: purple"
         >
           Skott utanför
         </button>
         <button
           data-name="Skott i täck: "
-          data-thecolor="SlateBlue"
+          data-thecolor="gray"
           onClick="updateBtn(this.id)"
           id="btnCovered"
-          style="background-color: SlateBlue"
+          style="background-color: gray"
         >
           Skott i täck
         </button>
         <button
           data-name="Skott över: "
-          data-theColor="Indigo"
+          data-theColor="red"
           onClick="updateBtn(this.id)"
           id="btnShotOver"
-          style="background-color: Indigo"
+          style="background-color: red"
         >
           Skott över
         </button>
