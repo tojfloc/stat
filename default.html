@@ -46,11 +46,7 @@
       });
 
       function removeBtn() {
-        if (
-          lastclick != null &&
-          lastBtnClickId != null &&
-          clicked_id != lastBtnClickId
-        ) {
+        if (lastclick != null && lastBtnClickId != null) {
           counter[lastBtnClickId] = (counter[lastBtnClickId] || 0) - 1;
 
           var btnTxt = $("#" + lastBtnClickId).data("name");
@@ -58,6 +54,8 @@
           $("#" + lastBtnClickId)
             .html(btnTxt + counter[lastBtnClickId])
             .button("refresh");
+
+          lastclick.remove();
 
           lastclick = null;
           lastBtnClickId = null;
@@ -69,6 +67,11 @@
 
           var btnTxt = $("#" + lastBtnClickId).data("name");
 
+          // var newDotcolor = $("#" + lastBtnClickId).data("thecolor");
+          // lastclick.css({ backgroundColor: newDotcolor });
+
+          //lastclick.backgroundColor = $("#" + lastBtnClickId).data("theColor");
+
           $("#" + lastBtnClickId)
             .html(btnTxt + counter[lastBtnClickId])
             .button("refresh");
@@ -77,6 +80,9 @@
           counter[lastBtnClickId] = (counter[lastBtnClickId] || 0) + 1;
 
           var btnTxt = $("#" + lastBtnClickId).data("name");
+
+          var newDotcolor = $("#" + lastBtnClickId).data("thecolor");
+          lastclick.css({ backgroundColor: newDotcolor });
 
           $("#" + lastBtnClickId)
             .html(btnTxt + counter[lastBtnClickId])
@@ -90,11 +96,12 @@
   <body>
     <center>
       <div id="floorballdiv" style="height: auto; width: auto">
-        <img src="floorball.png" style="height: 800px" />
+        <img src="floorball.png" style="height: 700px" />
       </div>
       <div>
         <button
           data-name="Mål: "
+          data-thecolor="red"
           onClick="updateBtn(this.id)"
           id="btnGoal"
           style="background-color: red"
@@ -103,6 +110,7 @@
         </button>
         <button
           data-name="Skott på mål: "
+          data-thecolor="Firebrick"
           onClick="updateBtn(this.id)"
           id="btnShotOnTarget"
           style="background-color: Firebrick"
@@ -111,6 +119,7 @@
         </button>
         <button
           data-name="Skott utanför: "
+          data-thecolor="Teal"
           onClick="updateBtn(this.id)"
           id="btnMissed"
           style="background-color: Teal"
@@ -119,6 +128,7 @@
         </button>
         <button
           data-name="Skott i täck: "
+          data-thecolor="SlateBlue"
           onClick="updateBtn(this.id)"
           id="btnCovered"
           style="background-color: SlateBlue"
@@ -127,13 +137,14 @@
         </button>
         <button
           data-name="Skott över: "
+          data-theColor="Indigo"
           onClick="updateBtn(this.id)"
           id="btnShotOver"
           style="background-color: Indigo"
         >
           Skott över
         </button>
-        <button onClick="removeBtn(this.id)" id="btnRemoveDot">
+        <button onClick="removeBtn()" id="btnRemoveDot">
           Radera sista klick
         </button>
       </div>
