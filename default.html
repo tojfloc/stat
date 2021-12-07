@@ -10,58 +10,79 @@
     <script src="https://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
 
     <script type="application/javascript">
+      var lastBtnClickId = null;
+      var counter = new Object();
+      var lastclick = null;
+
       $(document).ready(function () {
-        //  here I asign the event dynamically, not needed for 'body' as such tag should always be present,
-        //  but something you should look into
-        //  see also: http://api.jquery.com/on/
-        var color = "#581845";
-        var lastclick = null;
+        var color = "Firebrick";
 
         $(document).on("click", "#floorballdiv", function (e) {
           mouseX = e.pageX;
           mouseY = e.pageY;
-          //  simply press F12 to look at your browsers console and see the results
+
           console.log("Mouse Position:\t" + mouseX + "|" + mouseY);
-          //  no need in JS to write var for every variable declartion,
-          //  just seperate with a comma
 
-          var size = "8px"; //  changed size to 5px from 1 just to make it easier to see what's going on for you
-          //  No need to use $("body") since this event takes place on the body tag
-          //  $(this), in an event, always equals the selector the event is tied to
-          lastclick =
-            //  making an element with jquery is simple
-            //  no need to insert whole tag, all you need is tag name and a closer
-            //  like so
-            $("<div />")
-              //  easily tie all css together
-              .css({
-                //  also, in jquery CSS, any css variable with a '-'
-                //  can be renamed when assigning
-                //  simply remove the '-' and capitilize the first letter of the second word
-                //  like so, here in 'background-color'
-                backgroundColor: color,
-                height: size,
-                left: mouseX + "px",
-                position: "absolute",
-                top: mouseY + "px",
-                width: size,
-              });
+          var size = "15px";
+          lastclick = $("<div />").css({
+            backgroundColor: color,
+            height: size,
+            left: mouseX + "px",
+            position: "absolute",
+            top: mouseY + "px",
+            width: size,
+          });
           $(this).append(lastclick);
-        });
 
-        $("#removeDot").click(function () {
-          if (lastclick != null) {
-            lastclick.remove();
-            lastclick = null;
-          }
-        });
+          lastBtnClickId = "btnShotOnTarget";
 
-        $("#colorGoal").click(function () {
-          if (lastclick != null) {
-            $(lastclick).css("background-color", "#C70039");
-          }
+          counter[lastBtnClickId] = (counter[lastBtnClickId] || 0) + 1;
+
+          // default counter is btnShotOnTarget
+          $("#btnShotOnTarget")
+            .html("Skott på mål: " + counter[lastBtnClickId])
+            .button("refresh");
         });
       });
+
+      function removeBtn() {
+        if (
+          lastclick != null &&
+          lastBtnClickId != null &&
+          clicked_id != lastBtnClickId
+        ) {
+          counter[lastBtnClickId] = (counter[lastBtnClickId] || 0) - 1;
+
+          var btnTxt = $("#" + lastBtnClickId).data("name");
+
+          $("#" + lastBtnClickId)
+            .html(btnTxt + counter[lastBtnClickId])
+            .button("refresh");
+
+          lastclick = null;
+          lastBtnClickId = null;
+        }
+      }
+      function updateBtn(clicked_id) {
+        if (lastBtnClickId != null && clicked_id != lastBtnClickId) {
+          counter[lastBtnClickId] = (counter[lastBtnClickId] || 0) - 1;
+
+          var btnTxt = $("#" + lastBtnClickId).data("name");
+
+          $("#" + lastBtnClickId)
+            .html(btnTxt + counter[lastBtnClickId])
+            .button("refresh");
+
+          lastBtnClickId = clicked_id;
+          counter[lastBtnClickId] = (counter[lastBtnClickId] || 0) + 1;
+
+          var btnTxt = $("#" + lastBtnClickId).data("name");
+
+          $("#" + lastBtnClickId)
+            .html(btnTxt + counter[lastBtnClickId])
+            .button("refresh");
+        }
+      }
     </script>
 
     <css type="text/css"></css>
@@ -69,12 +90,52 @@
   <body>
     <center>
       <div id="floorballdiv" style="height: auto; width: auto">
-        <img src="floorball.png" style="width: 90%" />
+        <img src="floorball.png" style="height: 800px" />
       </div>
-
       <div>
-        <button id="removeDot">Radera sista klick</button>
-        <button id="colorGoal">Målfärg</button>
+        <button
+          data-name="Mål: "
+          onClick="updateBtn(this.id)"
+          id="btnGoal"
+          style="background-color: red"
+        >
+          Mål
+        </button>
+        <button
+          data-name="Skott på mål: "
+          onClick="updateBtn(this.id)"
+          id="btnShotOnTarget"
+          style="background-color: Firebrick"
+        >
+          Skott på mål
+        </button>
+        <button
+          data-name="Skott utanför: "
+          onClick="updateBtn(this.id)"
+          id="btnMissed"
+          style="background-color: Teal"
+        >
+          Skott utanför
+        </button>
+        <button
+          data-name="Skott i täck: "
+          onClick="updateBtn(this.id)"
+          id="btnCovered"
+          style="background-color: SlateBlue"
+        >
+          Skott i täck
+        </button>
+        <button
+          data-name="Skott över: "
+          onClick="updateBtn(this.id)"
+          id="btnShotOver"
+          style="background-color: Indigo"
+        >
+          Skott över
+        </button>
+        <button onClick="removeBtn(this.id)" id="btnRemoveDot">
+          Radera sista klick
+        </button>
       </div>
     </center>
   </body>
